@@ -1,13 +1,9 @@
-const form = document.getElementById("loginForm");
-
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
+async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const role = document.getElementById("role").value;
 
-  const res = await fetch("https://your-backend-url.onrender.com/api/login", {
+  const res = await fetch("https://backend-ear3.onrender.com", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password, role })
@@ -16,13 +12,10 @@ form.addEventListener("submit", async (e) => {
   const data = await res.json();
 
   if (res.ok) {
-    // Save token and role to localStorage
+    alert("Login successful!");
     localStorage.setItem("token", data.token);
-    localStorage.setItem("role", role);
-
-    // Redirect to appropriate dashboard
     window.location.href = `${role}-dashboard.html`;
   } else {
-    document.getElementById("error").innerText = data.message;
+    alert(data.message || "Login failed");
   }
-});
+}
